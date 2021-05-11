@@ -1,0 +1,66 @@
+Typed in Vim ;) 
+
+Hook - Python and R Rivalry
+
+Getting Started
+
+i. install.packages('reticulate')
+
+ii. explain virtual environments
+	• virtual environments allow for separating libraries, scripts and
+	interpreter are isolated from those of other environments or the root
+	• these work in tandem with package managers for Python, such as
+	Anaconda — which is what I use. A disclaimer on these — sometimes,
+	they only support certain versions of a language interpreter itself
+		○ for instance, in the past I used the R and RStudio
+		distributions available on Anaconda, but the version of R
+		was I believe 3.6 or so, and I was able to get by just fine
+		in the other R class I've taken. But for this one, I found
+		that I couldn't use the older distribution available thru
+		Anaconda, so I reinstalled R and RStudio fresh, outside of
+		the Anaconda ecosystem. Python seems to get more love than R,
+		though.	
+	
+Comparing R and Python Packages
+
+i. Both have base functions, and base operators
+	• +, -, *, /, % etc.
+
+iii. different data types
+	• R
+		○ Character
+		○ Integer
+		○ Double (Floating Point Numeric)
+	• Python
+		○ Strings
+		○ Integers
+		○ Floats
+		○ Lists
+		○ Tuples
+		○ Dictionaries/Hashmaps
+	• Vectors and Lists are both comparable, for example, where they can
+	both house multiple elements of different data types
+	• all sorts of other analogous functions, such as len() in Python and
+	and length() in R
+
+iii. Calling Python
+
+	• library('reticulate')
+	• use_condaenv('C:\\Users\\DScience\\anaconda3\\envs\\Python',
+	required = TRUE)
+	• create python code chunk in Rmd
+
+iv. Data Manipulation: Tidyverse & data.table vs pandas
+	• import pandas - the package that gives Python dataframes!
+	• create a new variable in a dataframe that is a manipulation of others 
+
+v. Data Visualization
+	• ggplot2 for R
+	• matplotlib for Python
+	
+vi. The best of Both Worlds: ML in sci-kit learn and visualization in ggplot 2
+	• linear regression or KNN?
+	
+• rstudio.github.io/reticulate docs
+• R-Ladies Baltimore Talk
+

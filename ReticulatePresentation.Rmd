@@ -1,11 +1,12 @@
 ---
-title: "Reticulate Presentation"
-subtitle: "⚔<br/>with xaringan"
+title: "Reticulate"
+subtitle: "The Marriage of Python and R"
 author: "Jacob Resnikoff"
 institute: "University of Oregon"
-date: "updated: `r Sys.Date()`"
+date: "Updated: 11 May 2021"
 output:
   xaringan::moon_reader:
+    css: [default, metropolis, metropolis-fonts]
     lib_dir: libs
     nature:
       highlightStyle: github
@@ -13,183 +14,32 @@ output:
       countIncrementalSlides: false
 ---
 
-```{r setup, include=FALSE}
+```{r setup, include=FALSE, echo=TRUE}
 options(htmltools.dir.version = FALSE)
 ```
 
-background-image: url("images/VimLogo.png")
+
+background-image: url('images/python-vs-r.png')
 background-position: center
-background-size: contain
+background-size: fit
 
----
-class: inverse, center, middle
+# A Tale of Two Languages
 
-# Get Started
-
----
-
-# Hello World
-
-Install **Vim** using apt-get on Ubuntu Linux:
-
-```{r eval=FALSE, tidy=FALSE}
-$ sudo apt update
-$ sudo apt search vim
-$ sudo apt install vim
-$ vim --version
-```
-
-Install **Vim** using [Github](https://www.vim.org/git.php):
-
-```{r eval=FALSE, tidy=FALSE}
-git clone https://github.com/vim/vim.git
-```
-
-I would recommend checking out [Vim's website](https://www.vim.org) for installation instructions.
-
+???
+Image Credit: https://www.datacamp.com/community/blog/when-to-use-python-or-r
 ---
 
-# What is Vim?
-Vim is a highly configurable text editor built to enable efficient text editing. <br> 
-It is an improved version of the vi editor distributed with most UNIX systems. <br>
-Vim is distributed free as charityware. <br>
-[source](http://www.vim.org/)
+# Roadmap
 
---
+*Discussion*
+1. Background on Reticulate
+2. Virtual Environments
+3. Fundaments of Python and R
+4. Data Wrangling Packages in Python and R
+5. Data Visualization Packages in Python and R
 
-<i>
-Vim may seem to have a steep learning curve, but by mastering a few commands you can quickly achieve greater productivity than you could with a regular text editor.
-</i>
-
----
-
-# When do I use Vim?
-- Quickly updating a file without opening an IDE.
-- Editing config files
-- Viewing output piped from command line
-
---
-
-# When don't I use Vim?
-- If I want to sit down and work on a project for awhile.
-- If I want to use my mouse.
-- If I want features like linters, graphical debugging, etc..
-
----
-
-# History
-- When Bram Moolenaar had bought an Amiga computer, he wanted to use the editor he learned on Unix. 
-- Since there was no good Vi for the Amiga, he started with the best that was available (a program called Stevie) and started improving it.
-- At first, his goal was to imitate Vi. 
-- Later new functionality was added, and by version 1.22 Vim included more features than Vi. 
-- That time it was renamed from Vi IMitation to Vi IMproved."
-[source](https://medium.com/@jovica/the-history-of-vim-b707758fb54f)
-
----
-
-class: inverse, middle, center
-
-# How to get started with Vim
-
----
-
-# Vim
-
-### Bare Minumum Knowledge to use Vim
-In my experience you can get 90% of Vim's advantages with just these simple commands.
-<i>I'm sure this is sacrilege to Vim power users...but I'm not one of them yet</i>
-
-#### Two main Modes:
-- Command mode: is where you can run commands. This is the default mode in which Vim starts up.
-- Insert mode: is the mode where you insert/write your text.
+*Live*
+1. Load Python in RStudio
+2. Demonstrate the Best of Both Worlds
 
 
----
-
-# Basic Commands
-| Command         | Action                                                |
-| :---            | :---                                                  |
-| vim test_file.R | create an empty file or open an existing file         |
-| Up Arrow        | move your cursor up a line in Command or Insert mode  |
-| Down Arrow      | move your cursor down a line in Command or Insert mode|
-| Left Arrow      | move your cursor left in Command or Insert mode       |
-| Right Arrow     | move your cursor right in Command or Insert mode      |
-| Esc             | enter Command mode                                    |
-| i               | enter Insert mode                                     |
-| u               | undo (for when things go wrong                        |
-| :q!             | Quit without saving (for when things go really wrong  |
-| :x              | Write file (if changes have been made) and exit       |
-
----
-
-# Help Tool
-| Command         | Action                                                |
-| :---            | :---                                                  |
-| vimtutor        | 30-minute tutorial that teaches the most basic <br> Vim functionality hands-on.|
-| :help           | open help window in Vim                               |
-| :help word      | search for help on the word                           |
-| Ctrl-]          | learn more about the selected word                    |
-
----
-
-class: inverse, middle, center
-
-# How to be a Vim power user (sort of)
-
----
-
-# Movement
-| Command         | Action                                                |
-| :---            | :---                                                  |
-| vim test_file.R | create an empty file or open an existing file         |
-| k               | moves the cursor up one line                          |
-| j               | moves the cursor down one line                        |
-| h               | moves the cursor one character to the left            |
-| i               | moves the cursor one character to the right           |
-| 0               | moves the cursor to the beginning of the line         |
-| $               | moves the cursor to the end of the line               |
-| w               | move forward one word                                 |
-| b               | move backward one word                                |
-| G               | moves the cursor to the end of the line               |
-| gg              | move forward one word                                 |
-| `.              | move backward one word                                |
-
----
-
-# Editing
-| Command         | Action                                                |
-| :---            | :---                                                  |
-| x               | deletes current character                             |
-| d               | starts the delete operation                           |
-| dw              | delete rest of word starting at cursor                |
-| d0              | will delete to the beginning of a line                |
-| d$              | will delete to the end of a line                      |
-| dgg             | will delete to the beginning of the file              |
-| dG              | will delete to the end of the file                    |
-| Ctrl-r          | will redo the last undo                               |
-
-<i>
-prefacing a movement command with a number will execute that movement multiple times. So, if you want to move up six lines, enter 6k and Vim will move the cursor up six lines. If you want to move over five words, enter 5w. To move 10 words back, use 10b.
-</i>
-
-There are so many commands I'm leaving out...Here's a [Vim Cheat Sheet](https://vim.rtorr.com) of 200+ commands
-
----
-
-background-image: url("images/smiley.png")
-background-position: center
-background-size: contain
-
----
-
-class: center, middle
-
-# Thanks!
-
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
-
-Learn more about Vim with these helpful links:
-[Vim Cheat Sheet](https://vim.rtorr.com)
-[Vim Adventures Game](https://vim-adventures.com)
-[Learning Vim in 2020](https://irian.to/blogs/learning-vim-in-2020/)
-[Vim Homepage](https://www.vim.org)
