@@ -45,9 +45,9 @@ By the end of today, you'll see that these two languages are **powerful in their
 *Discussion*
 1. Background on Reticulate
 2. Virtual Environments
-3. Fundaments of Python and R
-4. Data Wrangling Packages in Python and R
-5. Data Visualization Packages in Python and R
+3. Comparing Data Types and Data Structures in Python and R
+4. Data Wrangling in Python
+5. Data Visualization in Python
 
 *Live*
 1. Load Python in RStudio
@@ -89,7 +89,7 @@ Reticulate allows one to:
 --
 
 * Call Python from R by:
-  +  it in the R Console
+  + using the Python Interpreter in the R Console
   + Importing Python Modules
   + R Markdown
 --
@@ -116,7 +116,7 @@ But I think the analogy still holds.
 
 --
 
-* Like pre-packaged meal boxes or shipping containers, virtual environments:
+* Like pre-packaged meal boxes, virtual environments:
 --
 
   + contain all the "ingredients" needed to operate the package
@@ -128,15 +128,384 @@ background-image: url('images/docker-logo.jpg')
 background-position: 50% 300px
 background-size: 500px 250px
 * Docker plays with this idea as well
+---
+class: inverse, center, middle
 
+# Getting Started
+&lt;html&gt;&lt;div style='float:left'&gt;&lt;/div&gt;&lt;hr color='#EB811B' size=1px width=796px&gt;&lt;/html&gt;
+---
+# Getting Started
+
+
+```r
+# load reticulate
+library(reticulate)
+
+# load version of python
+use_condaenv('C:\\Users\\DScience\\anaconda3\\envs\\Python', required = TRUE)
+```
+
+.pull-left[
+
+## Python
+
+
+```python
+print('Hello World!')
+```
+
+```
+## Hello World!
+```
+
+]
+
+.pull-right[
+
+## R
+
+
+```r
+cat('Hello World')
+```
+
+```
+## Hello World
+```
+
+]
+
+--
+
+.center[So far so good...]
+---
+# Lists
+
+## Python
+
+In Python we have lists, which can be composed of scalars or other objects:
+
+
+```python
+# lists - this list contains scalars of type integer, boolean, float, string, 
+# and a list!
+my_list = [27, True, 72.998, 'Jeff Jefferson III, Esquire', [3.2, 5.4]]
+```
+
+Notice the `=` we use for variable assignment; we use `==` for logical
+comparisons, though. Also note that the boolean `True` has a single capital
+letter.
+
+## R
+
+Aside from some syntax, we can do the same thing in R!
+
+
+```r
+# this list contains scalars of type integer, logical, numeric, character, 
+# and a vector!
+my_list &lt;- list(27, TRUE, 72.998, 'Jeff Jefferson III, Esquire', c(3.2, 5.4))
+```
+
+Notice here the `&lt;-` as well as the logical `TRUE` is fully capitalized.
+
+---
+# Hashmaps (also known as Dictionaries)
+
+## Python
+
+In Python dictionaries are built-in. They consist of key-value pairs:
+
+
+```python
+# dictionary
+my_dict = {
+  'film': 'Top Gun',
+  'release year': 1986,
+  'star': 'Tom Cruise'}
+```
+
+## R
+
+We have a similar object in R, although it is not a base R object type:
+
+
+```r
+# we need an additional library, because hashmaps are not built-in as they are in python
+library(hash)
+
+my_hash &lt;- hash(
+  keys = c('film', 'release year', 'star'),
+  values = c('Top Gun', 1986, 'Tom Cruise'))
+```
+
+---
+# Arrays
+
+## Python
+
+Arrays are not built-in Python objects. Instead, we use the "ndarray" object
+from NumPy — a Python package for scientific computing that isn't included in 
+base Python:
+
+
+```python
+# arrays require the NumPy package
+import numpy as np
+
+a = np.array([1, 3, 5, 7, 9])
+
+b = a/10
+
+print(b, type(b))
+```
+
+```
+## [0.1 0.3 0.5 0.7 0.9] &lt;class 'numpy.ndarray'&gt;
+```
+
+Because of how the NumPy developers constructed them, NumPy arrays are
+especially efficient with memory.
+
+---
+# Arrays
+
+## R
+
+Arrays are built-in to R, and are meant to store multi-dimensional data:
+
+
+```r
+# vectors are just 1-dimensional arrays!
+arr &lt;- array(seq(from = 1, to = 9, by = 2))
+
+cat(arr/10)
+```
+
+```
+## 0.1 0.3 0.5 0.7 0.9
+```
+
+```r
+class(arr)
+```
+
+```
+## [1] "array"
+```
+
+---
+# Functions and Control Flow
+
+## Python
+
+Notice the minimalist syntax...:
+
+
+```python
+
+def sortOnFive(x):
+    if x &gt; 5:
+        return 1
+    elif x &lt; 5:
+        return -1
+    else:
+        return 0
+         
+print(sortOnFive(4), sortOnFive(5), sortOnFive(6))
+```
+
+```
+## -1 0 1
+```
 
 ---
 
-# Fundaments - Data Types
+# Functions and Control Flow
+
+## R
+
+In R, we make liberal use of curly braces:
+
+
+```r
+# now the brackets come into play
+sortOnFive &lt;- function(x){
+  if (x &gt; 5){
+    print(1)
+  }
+  else if (x &lt; 5){
+    print(-1)
+  } else {
+    print(0)
+  }
+}
+cat(sortOnFive(4), sortOnFive(5), sortOnFive(6))
+```
+
+```
+## [1] -1
+## [1] 0
+## [1] 1
+## -1 0 1
+```
 
 ---
 
 # Data Wrangling
+
+For our examples today, we will be using a dataset on Toyota Corollas:
+
+
+```python
+# load dependencies
+import numpy as np
+import pandas as pd
+
+# assign data to pandas dataframe
+df = pd.read_csv('data/toyota_corolla.csv')
+print(type(df))
+```
+
+```
+## &lt;class 'pandas.core.frame.DataFrame'&gt;
+```
+
+For data wrangling, we use pandas, which stands for Panel Data. It is analogous
+to R's tidyverse and data.table libraries. 
+See that we imported NumPy as well as pandas? This is because NumPy is a
+dependency of pandas. Without it, pandas couldn't work its wrangling-magic.
+
+---
+
+# Calling the Head Method
+
+
+```python
+# call the head method
+df.head()
+```
+
+```
+##                                            model  ...  tow_bar
+## 0  TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors  ...        0
+## 1  TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors  ...        0
+## 2  TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors  ...        0
+## 3  TOYOTA Corolla 2.0 D4D HATCHB TERRA 2/3-Doors  ...        0
+## 4    TOYOTA Corolla 2.0 D4D HATCHB SOL 2/3-Doors  ...        0
+## 
+## [5 rows x 38 columns]
+```
+
+Like in R, we can call head to access the first few rows of a dataframe. In
+Python, though, it is referred to as a "method." We use the `.` notation to
+access them.
+
+**Methods are functions specific to a particular object type**
+
+---
+# Accessing an Attribute
+
+Hard to see all the columns, right?
+
+
+```python
+# call columns attribute
+print(df.columns)
+```
+
+```
+## Index(['model', 'price', 'age_08_04', 'mfg_month', 'mfg_year', 'km',
+##        'fuel_type', 'hp', 'met_color', 'color', 'automatic', 'cc', 'doors',
+##        'cylinders', 'gears', 'quarterly_tax', 'weight', 'mfr_guarantee',
+##        'bovag_guarantee', 'guarantee_period', 'abs', 'airbag_1', 'airbag_2',
+##        'airco', 'automatic_airco', 'boardcomputer', 'cd_player',
+##        'central_lock', 'powered_windows', 'power_steering', 'radio',
+##        'mistlamps', 'sport_model', 'backseat_divider', 'metallic_rim',
+##        'radio_cassette', 'parking_assistant', 'tow_bar'],
+##       dtype='object')
+```
+
+---
+
+# Value Counts and Sorting
+
+
+```python
+# find the number of cars manufactured in each year, in descending order
+df['mfg_year'].value_counts().sort_values(ascending=False)
+```
+
+```
+## 1999    441
+## 1998    392
+## 2000    225
+## 2001    192
+## 2002     87
+## 2003     75
+## 2004     24
+## Name: mfg_year, dtype: int64
+```
+
+---
+
+# Descriptive Statistics
+
+
+```python
+# dataframe of descriptive statistics
+df.describe()
+```
+
+```
+##               price    age_08_04  ...  parking_assistant      tow_bar
+## count   1436.000000  1436.000000  ...        1436.000000  1436.000000
+## mean   10730.824513    55.947075  ...           0.002786     0.277855
+## std     3626.964585    18.599988  ...           0.052723     0.448098
+## min     4350.000000     1.000000  ...           0.000000     0.000000
+## 25%     8450.000000    44.000000  ...           0.000000     0.000000
+## 50%     9900.000000    61.000000  ...           0.000000     0.000000
+## 75%    11950.000000    70.000000  ...           0.000000     1.000000
+## max    32500.000000    80.000000  ...           1.000000     1.000000
+## 
+## [8 rows x 35 columns]
+```
+
+---
+
+# Creating a New Column
+
+
+```python
+# divide price by weight for each observation
+df['price_per_pound'] = df['price']/df['weight']
+
+# access array
+print(type(df.price_per_pound))
+```
+
+```
+## &lt;class 'pandas.core.series.Series'&gt;
+```
+
+```python
+df.price_per_pound
+```
+
+```
+## 0       11.587983
+## 1       11.802575
+## 2       11.974249
+## 3       12.832618
+## 4       11.752137
+##           ...    
+## 1431     7.317073
+## 1432    10.684729
+## 1433     8.374384
+## 1434     7.142857
+## 1435     6.238779
+## Name: price_per_pound, Length: 1436, dtype: float64
+```
 
 ---
 
