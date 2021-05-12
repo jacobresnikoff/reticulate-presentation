@@ -18,17 +18,22 @@ output:
 options(htmltools.dir.version = FALSE)
 ```
 
+background-image: url('images/python-logo.png'), url('images/r-logo.png'), url('images/rivalry.jpg')
+background-position: 120px 80px, 690px 80px, center
+background-size: 80px 80px, 80px 80px, contain
 
-background-image: url('images/python-vs-r.png')
-background-position: center
-background-size: fit
+# Rivalry
 
-# A Tale of Two Languages
-
-???
-Image Credit: https://www.datacamp.com/community/blog/when-to-use-python-or-r
 ---
+background-image: url('images/teamwork-hands.jpg')
+background-position: 50% 100px
+background-size: 1027px 533px
 
+# Our Goal
+ 
+By the end of today, you'll see that these two languages are **powerful in their own right**, and can **join forces to great effect**
+
+---
 # Roadmap
 
 *Discussion*
@@ -42,4 +47,90 @@ Image Credit: https://www.datacamp.com/community/blog/when-to-use-python-or-r
 1. Load Python in RStudio
 2. Demonstrate the Best of Both Worlds
 
+---
+class: inverse, center, middle
+
+# Background on Reticulate
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+---
+# Background
+
+A "comprehensive set of tools for interoperability between Python and R"<sup>1</sup>
+
+.footnote[
+<sup>1</sup> [Reticulate Documentation](https://rstudio.github.io/reticulate/index.html)
+]
+---
+# Background
+
+That's a little verbose, eh?
+
+.footnote[
+<sup>1</sup> [Reticulate Documentation](https://rstudio.github.io/reticulate/index.html)
+]
+--
+
+When I read this, I see **a toolbox that *unites* R and Python**
+
+--
+background-image: url('images/reticulated_python.png')
+background-size: 390px 278px
+---
+# Background
+
+Reticulate allows one to:
+
+--
+
+* Call Python from R by:
+  +  it in the R Console
+  + Importing Python Modules
+  + R Markdown
+--
+
+* Translate between R and Python objects
+  + R and pandas dataframes, R matrices and NumPy arrays
+--
+
+* Flexibly bind to different versions of Python, including those in virtual and Conda environments
+---
+background-image: url('images/blue-apron-box.jpg')
+background-size: fill
+
+# Virtual Environments
+
+---
+# Virtual Environments
+
+This is **not** an ad for Blue Apron!
+
+--
+
+But I think the analogy still holds.
+
+--
+
+* Like pre-packaged meal boxes or shipping containers, virtual environments:
+--
+
+  + contain all the "ingredients" needed to operate the package
+--
+
+  + are therefore **convenient** and **reliable** for sharing your work
+--
+background-image: url('images/docker-logo.jpg')
+background-position: 50% 300px
+background-size: 500px 250px
+* Docker plays with this idea as well
+---
+
+# Fundaments - Data Types
+
+---
+
+# Data Wrangling
+
+---
+
+# Data Visualization
 
