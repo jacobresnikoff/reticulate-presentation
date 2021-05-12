@@ -42,16 +42,19 @@ By the end of today, you'll see that these two languages are **powerful in their
 ---
 # Roadmap
 
-*Discussion*
 1. Background on Reticulate
 2. Virtual Environments
 3. Comparing Data Types and Data Structures in Python and R
 4. Data Wrangling in Python
 5. Data Visualization in Python
 
-*Live*
-1. Load Python in RStudio
-2. Demonstrate the Best of Both Worlds
+--
+
+background-image: url('images/surprise.jpg')
+background-size: 417px 218px
+background-position: 50% 300px
+
+* A surprise!
 
 ---
 class: inverse, center, middle
@@ -112,14 +115,14 @@ This is **not** an ad for Blue Apron!
 
 --
 
-But I think the analogy still holds.
+But I think the analogy still rings true.
 
 --
 
 * Like pre-packaged meal boxes, virtual environments:
 --
 
-  + contain all the "ingredients" needed to operate the package
+  + contain the "ingredients" and "instructions" needed to operate the package
 --
 
   + are therefore **convenient** and **reliable** for sharing your work
@@ -143,6 +146,7 @@ library(reticulate)
 # load version of python
 use_condaenv('C:\\Users\\DScience\\anaconda3\\envs\\Python', required = TRUE)
 ```
+--
 
 .pull-left[
 
@@ -375,14 +379,110 @@ df.describe()
 
 ```{python}
 # divide price by weight for each observation
-df['price_per_pound'] = df['price']/df['weight']
+df['price_per_kg'] = df['price']/df['weight']
 
 # access array
-print(type(df.price_per_pound))
-df.price_per_pound
+print(type(df.price_per_kg))
+df.price_per_kg
 ```
 
 ---
 
 # Data Visualization
 
+```{python}
+import matplotlib.pyplot as plt
+
+# clear axes
+plt.clf()
+
+# assign earlier mfg_counts to an object
+mfg_counts = df['mfg_year'].value_counts()
+
+# instantiate barplot
+ax = plt.bar(mfg_counts.index, mfg_counts.values, color='maroon')
+plt.title('Counts of Corollas by Manufacturing Year')
+plt.xlabel('Year')
+plt.ylabel('Count')
+
+plt.show()
+
+# plt.savefig('mfg-counts.png')
+```
+
+---
+
+background-image: url('images/mfg-counts.png')
+background-size: fill
+
+# Visualizing Manufacturing Year Counts
+
+---
+
+class: inverse, center, middle
+
+# Wait... didn't you say something about "uniting" them?
+<html><div style='float:left'></div><hr color='#EB811B' size=1px width=796px></html>
+
+---
+
+# Teaming Up
+
+For this last one, I think this [towarddatascience article](https://towardsdatascience.com/python-seaborn-plots-in-r-using-reticulate-fb59cebf61a7)
+illustrates it best. Crossing languages can be finnicky, but it can be rewarding:
+
+```{r}
+np <- import('numpy')
+pd <- import('pandas')
+plt <- import('matplotlib.pyplot')
+sns <- import('seaborn')
+
+# clear previous plot
+plt$clf()
+
+# load airpassengers data
+df <- datasets::AirPassengers
+# converting Time-Series object into an R Dataframe 
+# Thx: https://stackoverflow.com/questions/5331901/transforming-a-time-series-into-a-data-frame-and-back
+df1 <- data.frame(tapply(df, list(year = floor(time(df)), month = month.abb[cycle(df)]), c))
+df1 <- df1[month.abb]
+
+# please note the function r_to_py() that converts R object into a python 
+sns$heatmap(r_to_py(df1), fmt="g", cmap ='viridis')
+
+# add title
+plt$title('Frequency Heatmap of Flights during each Month of Respective Years')
+
+# display the plot
+plt$show()
+
+# plt$savefig('freq-heatmap.png')
+```
+
+---
+background-image: url('images/freq-heatmap.png')
+background-size: fill
+
+# Teaming Up
+---
+
+# Conclusions
+
+Both Python and R have their strengths, weaknesses, and quirks. Stick to R, try Python,
+or whatever path you may follow, know this: being multilingual
+will only help you stretch your mind and become a more versatile data scientist.
+
+---
+
+# More Resources
+
+* This [R-Ladies Baltimore Seminar](https://www.youtube.com/watch?v=U3ByGh8RmSc)
+goes over the same content discussed today, and more!
+* [Reticulate Documentation](https://rstudio.github.io/reticulate/index.html)
+
+---
+
+class: inverse, center, middle
+
+background-image: url('images/reticulated_python.png')
+background-size: fill
